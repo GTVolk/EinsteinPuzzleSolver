@@ -1,0 +1,10 @@
+After general rule set validation, remains 43 lines.
+After removing out of bound neighbors, remains 37 lines.
+After 1 recursive iteration, remains 10 lines
+After 2 recursive iteration, remains 5 lines
+-------------------------------------------
+1 - Норвежец - Жёлтый - Кошки - Вода - Dunhill
+2 - Датчанин - Синий - Лошади - Чай - Rothmans
+3 - Англичанин - Красный - Птицы - Молоко - Pall Mall
+4 - Немец - Зелёный - Рыбки - Кофе - Marlboro
+5 - Швед - Белый - Собаки - Пиво - Philip Morris
