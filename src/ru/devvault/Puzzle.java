@@ -6,49 +6,41 @@ import java.util.Iterator;
 public class Puzzle {
     private static final ArrayList<Integer> orders = new ArrayList<>(5);
     private static final ArrayList<String> nations = new ArrayList<>(5);
+    private static final ArrayList<String> colors = new ArrayList<>(5);
+    private static final ArrayList<String> cigarettes = new ArrayList<>(5);
     private static final ArrayList<String> animals = new ArrayList<>(5);
     private static final ArrayList<String> drinks = new ArrayList<>(5);
-    private static final ArrayList<String> cigarettes = new ArrayList<>(5);
-    private static final ArrayList<String> colors = new ArrayList<>(5);
 
     private static PuzzleSet<PuzzleLine> puzzleTable;
 
     static {
+        initOrders();
+        initNations();
+        initColors();
+        initCigarettes();
+        initAnimals();
+        initDrinks();
+    }
+
+    public static void initOrders() {
         // House orders
         orders.add(1);
         orders.add(2);
         orders.add(3);
         orders.add(4);
         orders.add(5);
+    }
 
+    public static void initNations() {
         // Man nations
         nations.add("English");
         nations.add("Danish");
         nations.add("German");
         nations.add("Swedesh");
         nations.add("Norwegian");
+    }
 
-        //Animals
-        animals.add("Zebra");
-        animals.add("Horse");
-        animals.add("Birds");
-        animals.add("Dog");
-        animals.add("Cats");
-
-        //Drinks
-        drinks.add("Coffee");
-        drinks.add("Tea");
-        drinks.add("Beer");
-        drinks.add("Water");
-        drinks.add("Milk");
-
-        //Smokes
-        cigarettes.add("Pall Mall");
-        cigarettes.add("Blend");
-        cigarettes.add("Blue Master");
-        cigarettes.add("Prince");
-        cigarettes.add("Dunhill");
-
+    public static void initColors() {
         //Colors
         colors.add("Red");
         colors.add("Green");
@@ -57,34 +49,34 @@ public class Puzzle {
         colors.add("Yellow");
     }
 
-    public static void main (String[] args){
-        //Rules
-        PuzzleLine rule2 = new PuzzleLine(null, "English", "Red", null, null, null);
-        PuzzleLine rule3 = new PuzzleLine(null, "Swedesh", null, "Dog", null, null);
-        PuzzleLine rule4 = new PuzzleLine(null, "Danish", null, null, "Tea", null);
-        PuzzleLine rule6 = new PuzzleLine(null, null, "Green", null, "Coffee", null);
-        PuzzleLine rule7 = new PuzzleLine(null, null, null, "Birds", null, "Pall Mall");
-        PuzzleLine rule8 = new PuzzleLine(null, null, "Yellow", null, null, "Dunhill");
-        PuzzleLine rule9 = new PuzzleLine(3, null, null, null, "Milk", null);
-        PuzzleLine rule10 = new PuzzleLine(1, "Norwegian", null, null, null, null);
-        PuzzleLine rule13 = new PuzzleLine(null, null, null, null, "Beer", "Blue Master");
-        PuzzleLine rule14 = new PuzzleLine(null, "German", null, null, null, "Prince");
-        PuzzleLine rule15 = new PuzzleLine(2, null, "Blue", null, null, null);
+    public static void initCigarettes() {
+        //Smokes
+        cigarettes.add("Pall Mall");
+        cigarettes.add("Blend");
+        cigarettes.add("Blue Master");
+        cigarettes.add("Prince");
+        cigarettes.add("Dunhill");
+    }
 
-        PuzzleSet<PuzzleLine> ruleSet = new PuzzleSet<>();
+    public static void initAnimals() {
+        //Animals
+        animals.add("Zebra");
+        animals.add("Horse");
+        animals.add("Birds");
+        animals.add("Dog");
+        animals.add("Cats");
+    }
 
-        ruleSet.add(rule2);
-        ruleSet.add(rule3);
-        ruleSet.add(rule4);
-        ruleSet.add(rule6);
-        ruleSet.add(rule7);
-        ruleSet.add(rule8);
-        ruleSet.add(rule9);
-        ruleSet.add(rule10);
-        ruleSet.add(rule13);
-        ruleSet.add(rule14);
-        ruleSet.add(rule15);
+    public static void initDrinks() {
+        //Drinks
+        drinks.add("Coffee");
+        drinks.add("Tea");
+        drinks.add("Beer");
+        drinks.add("Water");
+        drinks.add("Milk");
+    }
 
+    public static void generalRuleSetValidation(PuzzleSet<PuzzleLine> ruleSet) {
         boolean validLine = true;
         puzzleTable = new PuzzleSet<>();
 
@@ -112,16 +104,16 @@ public class Puzzle {
                                     // Adding rules of neighbors
                                     if (cigarette.equalsIgnoreCase("Blend")
                                         && (
-                                            animal.equalsIgnoreCase("Cats")
+                                        animal.equalsIgnoreCase("Cats")
                                             || drink.equalsIgnoreCase("Water")
-                                        )
+                                    )
                                     ) {
                                         validLine = false;
                                     }
 
                                     if (
                                         cigarette.equalsIgnoreCase("Dunhill")
-                                        && animal.equalsIgnoreCase("Horse")
+                                            && animal.equalsIgnoreCase("Horse")
                                     ) {
                                         validLine = false;
                                     }
@@ -138,48 +130,45 @@ public class Puzzle {
                                             puzzleLine.setLeftNeighbor(new PuzzleLine(null, null, "Green", null, null, null));
                                         }
 
-                                        //
                                         if (
                                             animal.equalsIgnoreCase("Cats")
-                                            && !cigarette.equalsIgnoreCase("Blend")
+                                                && !cigarette.equalsIgnoreCase("Blend")
                                         ) {
                                             puzzleLine.addUndefinedNeighbor(new PuzzleLine(null, null, null, null, null, "Blend"));
                                         }
 
                                         if (
                                             cigarette.equalsIgnoreCase("Blend")
-                                            && !animal.equalsIgnoreCase("Cats")
+                                                && !animal.equalsIgnoreCase("Cats")
                                         ) {
                                             puzzleLine.addUndefinedNeighbor(new PuzzleLine(null, null, null, "Cats", null, null));
                                         }
 
-                                        //
                                         if (
                                             drink.equalsIgnoreCase("Water")
-                                            && !animal.equalsIgnoreCase("Cats")
-                                            && !cigarette.equalsIgnoreCase("Blend")
+                                                && !animal.equalsIgnoreCase("Cats")
+                                                && !cigarette.equalsIgnoreCase("Blend")
                                         ) {
                                             puzzleLine.addUndefinedNeighbor(new PuzzleLine(null, null, null, null, null, "Blend"));
                                         }
 
                                         if (
                                             cigarette.equalsIgnoreCase("Blend")
-                                            && !drink.equalsIgnoreCase("Water")
+                                                && !drink.equalsIgnoreCase("Water")
                                         ) {
                                             puzzleLine.addUndefinedNeighbor(new PuzzleLine(null, null, null, null, "Water", null));
                                         }
 
-                                        //
                                         if (
                                             animal.equalsIgnoreCase("Horse")
-                                            && !cigarette.equalsIgnoreCase("Dunhill")
+                                                && !cigarette.equalsIgnoreCase("Dunhill")
                                         ) {
                                             puzzleLine.addUndefinedNeighbor(new PuzzleLine(null, null, null, null, null, "Dunhill"));
                                         }
 
                                         if (
                                             cigarette.equalsIgnoreCase("Dunhill")
-                                            && !animal.equalsIgnoreCase("Horse")
+                                                && !animal.equalsIgnoreCase("Horse")
                                         ) {
                                             puzzleLine.addUndefinedNeighbor(new PuzzleLine(null, null, null, "Horse", null, null));
                                         }
@@ -194,6 +183,10 @@ public class Puzzle {
         } //order end
 
         System.out.println("After general rule set validation, remains "+ puzzleTable.size() + " lines.");
+    }
+
+    public static void removeOutOfBoundNeighbors() {
+        boolean validLine;
 
         for (Iterator<PuzzleLine> it = puzzleTable.iterator(); it.hasNext();){
             validLine = true;
@@ -217,32 +210,43 @@ public class Puzzle {
         }
 
         System.out.println("After removing out of bound neighbors, remains " + puzzleTable.size() + " lines.");
+    }
 
+    public static void makeLeftNeighbor(PuzzleLine puzzleLine, PuzzleLine leftNeighbor) {
+        leftNeighbor.setOrder(puzzleLine.getOrder() - 1);
+        if (puzzleTable.contains(leftNeighbor)) {
+            if (puzzleLine.hasLeftNeighbor())
+                puzzleLine.getLeftNeighbor().merge(leftNeighbor);
+            else
+                puzzleLine.setLeftNeighbor(leftNeighbor);
+        }
+    }
+
+    public static void makeRightNeighbor(PuzzleLine puzzleLine, PuzzleLine rightNeighbor) {
+        rightNeighbor.setOrder(puzzleLine.getOrder() + 1);
+        if (puzzleTable.contains(rightNeighbor)) {
+            if (puzzleLine.hasRightNeighbor())
+                puzzleLine.getRightNeighbor().merge(rightNeighbor);
+            else
+                puzzleLine.setRightNeighbor(rightNeighbor);
+        }
+    }
+
+    public static void setLeftAndRightNeighbors() {
         //Setting left and right neighbors
         for (PuzzleLine puzzleLine : puzzleTable) {
             if (puzzleLine.hasUndefNeighbors()) {
                 for (PuzzleLine leftNeighbor : puzzleLine.getUndefNeighbors()) {
                     PuzzleLine rightNeighbor = new PuzzleLine(leftNeighbor);
 
-                    //make it left neighbor
-                    leftNeighbor.setOrder(puzzleLine.getOrder() - 1);
-                    if (puzzleTable.contains(leftNeighbor)) {
-                        if (puzzleLine.hasLeftNeighbor())
-                            puzzleLine.getLeftNeighbor().merge(leftNeighbor);
-                        else
-                            puzzleLine.setLeftNeighbor(leftNeighbor);
-                    }
-                    rightNeighbor.setOrder(puzzleLine.getOrder() + 1);
-                    if (puzzleTable.contains(rightNeighbor)) {
-                        if (puzzleLine.hasRightNeighbor())
-                            puzzleLine.getRightNeighbor().merge(rightNeighbor);
-                        else
-                            puzzleLine.setRightNeighbor(rightNeighbor);
-                    }
+                    makeLeftNeighbor(puzzleLine, leftNeighbor);
+                    makeRightNeighbor(puzzleLine, rightNeighbor);
                 }
             }
         }
+    }
 
+    public static void validateNeighborsRules(PuzzleSet<PuzzleLine> ruleSet) {
         int iteration = 1;
         int lastSize = 0;
 
@@ -269,7 +273,9 @@ public class Puzzle {
 
             iteration += 1;
         }
+    }
 
+    public static void printResults() {
         // Print the results
         System.out.println("-------------------------------------------");
         if (puzzleTable.size() == 5) {
@@ -279,6 +285,47 @@ public class Puzzle {
         } else {
             System.out.println("Sorry, solution not found!");
         }
+    }
+
+    public static PuzzleSet<PuzzleLine> initRules() {
+        //Rules
+        PuzzleLine rule2 = new PuzzleLine(null, "English", "Red", null, null, null);
+        PuzzleLine rule3 = new PuzzleLine(null, "Swedesh", null, "Dog", null, null);
+        PuzzleLine rule4 = new PuzzleLine(null, "Danish", null, null, "Tea", null);
+        PuzzleLine rule6 = new PuzzleLine(null, null, "Green", null, "Coffee", null);
+        PuzzleLine rule7 = new PuzzleLine(null, null, null, "Birds", null, "Pall Mall");
+        PuzzleLine rule8 = new PuzzleLine(null, null, "Yellow", null, null, "Dunhill");
+        PuzzleLine rule9 = new PuzzleLine(3, null, null, null, "Milk", null);
+        PuzzleLine rule10 = new PuzzleLine(1, "Norwegian", null, null, null, null);
+        PuzzleLine rule13 = new PuzzleLine(null, null, null, null, "Beer", "Blue Master");
+        PuzzleLine rule14 = new PuzzleLine(null, "German", null, null, null, "Prince");
+        PuzzleLine rule15 = new PuzzleLine(2, null, "Blue", null, null, null);
+
+        PuzzleSet<PuzzleLine> ruleSet = new PuzzleSet<>();
+
+        ruleSet.add(rule2);
+        ruleSet.add(rule3);
+        ruleSet.add(rule4);
+        ruleSet.add(rule6);
+        ruleSet.add(rule7);
+        ruleSet.add(rule8);
+        ruleSet.add(rule9);
+        ruleSet.add(rule10);
+        ruleSet.add(rule13);
+        ruleSet.add(rule14);
+        ruleSet.add(rule15);
+
+        return ruleSet;
+    }
+
+    public static void main (String[] args){
+        PuzzleSet<PuzzleLine> ruleSet = initRules();
+
+        generalRuleSetValidation(ruleSet);
+        removeOutOfBoundNeighbors();
+        setLeftAndRightNeighbors();
+        validateNeighborsRules(ruleSet);
+        printResults();
     }
 
     // Recursively checks the input set to ensure each line has right neighbor.
