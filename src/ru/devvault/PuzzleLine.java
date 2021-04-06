@@ -5,9 +5,9 @@ public class PuzzleLine {
     private Integer order;
     private String nation;
     private String color;
+    private String cigarette;
     private String animal;
     private String drink;
-    private String cigarette;
 
     private PuzzleLine rightNeighbor;
     private PuzzleLine leftNeighbor;
@@ -24,18 +24,23 @@ public class PuzzleLine {
         this.order = order;
         this.nation = nation;
         this.color = color;
+        this.cigarette = cigarette;
         this.animal = animal;
         this.drink = drink;
-        this.cigarette = cigarette;
+
+        this.rightNeighbor = null;
+        this.leftNeighbor = null;
+        this.undefNeighbors = null;
     }
 
     public PuzzleLine(PuzzleLine obj) {
         this.order = obj.getOrder();
         this.nation = obj.getNation();
         this.color = obj.getColor();
+        this.cigarette = obj.getCigarette();
         this.animal = obj.getAnimal();
         this.drink = obj.getDrink();
-        this.cigarette = obj.getCigarette();
+
         this.rightNeighbor = obj.getRightNeighbor();
         this.leftNeighbor = obj.getLeftNeighbor();
         this.undefNeighbors = obj.getUndefNeighbors();
@@ -216,8 +221,8 @@ public class PuzzleLine {
         if (getOrder() == null) setOrder(mergedLine.getOrder());
         if (getNation() == null) setNation(mergedLine.getNation());
         if (getColor() == null) setColor(mergedLine.getColor());
+        if (getCigarette() == null) setCigarette(mergedLine.getCigarette());
         if (getAnimal() == null) setAnimal(mergedLine.getAnimal());
         if (getDrink() == null) setDrink(mergedLine.getDrink());
-        if (getCigarette() == null) setCigarette(mergedLine.getCigarette());
     }
 }
